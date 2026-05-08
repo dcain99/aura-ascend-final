@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Ascend | HUD</title>
+    <link rel="stylesheet" href="style.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<nav class="main-nav">
+    <div class="logo">AURA ASCEND</div>
+    
+    <div class="wisdom-nav-container">
+        <div id="wisdom-scroll" class="wisdom-text">"The only way to grow is to move."</div>
+        <div class="scroll-timer-line"></div>
+    </div>
+    
+    <ul>
+        <li><a href="#" class="active">HUD</a></li>
+        <li id="NavRank" style="color: #ffcc00; font-weight: bold; font-size: 12px; border: 1px solid #ffcc00; padding: 2px 8px; border-radius: 4px;">RANK: E</li>
+    </ul>
+</nav>
+
+<div id="temporalHeader" style="font-family: 'Courier New', monospace; font-size: 10px; color: #00bfff; letter-spacing: 2px; text-transform: uppercase; margin: 10px 0 20px 20px; opacity: 0.7;">
+    System Log: <span id="sessionTimestamp">INITIALIZING...</span>
+</div>
+
+<div class="main-wrapper">
+    <div class="aura-centerpiece">
+        <div id="auraEffect" class="aura-visual-container"></div>
+        <div class="avatar-circle">
+            <span class="avatar-icon">👤</span> 
+        </div>
+        <div id="RankTitle">UNRANKED</div>
+        <div id="DisplayAura">0</div>
+    </div>
+
+    <div class="stat-card top-left">
+        <label>Daily Steps</label>
+        <input type="number" id="steps" placeholder="0">
+    </div>
+
+    <div class="stat-card top-right">
+        <label>Strength Sets</label>
+        <input type="number" id="sets" placeholder="0">
+    </div>
+
+    <div class="stat-card mid-left">
+        <label>Water (Liters)</label>
+        <input type="number" id="water" step="0.1" placeholder="0.0">
+    </div>
+
+    <div class="stat-card mid-right">
+        <label>Standing (Hours)</label>
+        <input type="number" id="standing" step="0.1" placeholder="0">
+    </div>
+
+    <div class="stat-card bottom-left">
+        <label>Bible Verses</label>
+        <input type="number" id="verses" placeholder="0">
+    </div>
+
+    <div class="stat-card bottom-right">
+        <label>Hours Sleep</label>
+        <input type="number" id="sleep" placeholder="0">
+    </div>
+
+    <div class="stat-card bottom-center">
+        <label class="card-title">DAILY GOALS</label>
+        <div class="protein-met-container">
+            <input type="checkbox" id="protein"> 
+            <label for="protein">Protein Met?</label>
+        </div>
+        
+        <div class="system-controls">
+            <div class="low-fx-container" style="margin-bottom: 10px;">
+                <input type="checkbox" id="lowFxToggle">
+                <label for="lowFxToggle" style="color: #888;">LOW FX MODE</label>
+            </div>
+            <input type="date" id="datePicker">
+            
+			<button id="masterAudioBtn" style="background: #00bfff; color: #000; border: none; cursor: pointer; padding: 10px; border-radius: 4px; font-weight: bold; width: 100%; margin-bottom: 10px;">
+				INITIALIZE AUDIO SYSTEM
+			</button>	
+
+            <button id="clearDataBtn">SYSTEM RESET (CLEAR ALL)</button>
+        </div> </div> <div class="stat-card history-card" style="grid-column: 1 / 4; grid-row: 4; min-height: 250px;">
+        <label>7-Day Growth History</label>
+        <canvas id="auraChart"></canvas>
+    </div>
+	
+<div class="stat-card" style="grid-column: 1 / 4; margin-top: 20px; padding: 25px; background: rgba(0,0,0,0.8); border: 1px solid #00bfff; border-radius: 8px; box-shadow: 0 0 15px rgba(0, 191, 255, 0.2);">
+    <h2 style="color: #00bfff; border-bottom: 1px solid #333; padding-bottom: 10px; text-transform: uppercase; letter-spacing: 2px;">AURA ASCEND: SYSTEM MANUAL</h2>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: left;">
+        
+        <div>
+            <h4 style="color: #ff4444; margin-bottom: 5px;">CORE PROTOCOLS</h4>
+            <p style="font-size: 0.8em; color: #ccc; margin-bottom: 10px;"><strong>Physical:</strong> Tracks steps/sets. Reaching "Optimal" triggers icon glow.</p>
+            <p style="font-size: 0.8em; color: #ccc; margin-bottom: 10px;"><strong>Spiritual:</strong> Bible study tracking. >10 verses triggers <em>Retention Penalty</em>.</p>
+            <p style="font-size: 0.8em; color: #ccc; margin-bottom: 10px;"><strong>Nutrition:</strong> Protein toggle activates <strong>1.2x Global Multiplier</strong>.</p>
+            <p style="font-size: 0.8em; color: #ccc;"><strong>Rest:</strong> Calculates <em>Survival Bonuses</em> based on sleep cycles.</p>
+        </div>
+
+        <div>
+            <h4 style="color: #55acee; margin-bottom: 5px;">SYSTEM COOLANT (Hydration)</h4>
+            <ul style="font-size: 0.8em; color: #ccc; list-style: none; padding: 0;">
+                <li>• &lt; 2.0L: <strong>Failure</strong> (-150 pts)</li>
+                <li>• 3.0L-4.5L: <strong>Optimal</strong> (+150 pts)</li>
+                <li>• &gt; 5.0L: <strong>Over-Hydration Penalty</strong></li>
+            </ul>
+            <h4 style="color: #e67e22; margin-top: 15px; margin-bottom: 5px;">ACTIVITY MONITOR</h4>
+            <ul style="font-size: 0.8em; color: #ccc; list-style: none; padding: 0;">
+                <li>• Active (2-4h): +15 pts/hr</li>
+                <li>• Peak (4h+): +100 pts Bonus</li>
+            </ul>
+        </div>
+
+        <div>
+            <h4 style="color: #00bfff; margin-bottom: 5px;">TECH SPECS</h4>
+            <ul style="font-size: 0.8em; color: #888; list-style: none; padding: 0;">
+                <li style="margin-bottom: 8px;"><strong>Low FX Mode:</strong> GPU-optimized rendering (disables CSS blurs).</li>
+                <li style="margin-bottom: 8px;"><strong>Web Audio API:</strong> Real-time frequency modulation via oscillator nodes.</li>
+                <li style="margin-bottom: 8px;"><strong>Local Storage:</strong> Temporal data persistence for 7-day history.</li>
+                <li><strong>Rankings:</strong> S-Rank (Predator) triggers contrast-burn filters.</li>
+            </ul>
+        </div>
+    </div>
+
+<div style="margin-top: 25px; padding: 15px; background: rgba(0,191,255,0.05); text-align: center; border: 1px dashed #00bfff;">
+        <h4 style="color: #fff; margin: 0; font-size: 0.9em; text-transform: uppercase;">MASTER POWER LEVEL FORMULA</h4>
+        <code style="font-size: 1.1em; color: #00bfff; display: block; margin: 5px 0;">
+            Power Level = [(Step Score + Strength Score + Bible Score + Sleep Score + Hydration Score + Standing Score)] X Protein Multiplier
+        </code>
+        <p style="font-size: 0.75em; color: #777; margin: 0;">
+            The system aggregates individual scores from all six core pillars before applying the Global Protein Multiplier (1.2x) for final output.
+        </p>
+    </div>
+</div>
+    
+</div> 
+
+
+<footer class="student-info">
+    <p><strong> Made by Dorian Cain</strong></p>
+
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
